@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2.2 (Python 3.8.6 on darwin)" generated="20210104 12:11:56.041" rpa="false">
+<suite id="s1" name="TC2 post request" source="/Users/ravindra/workspace/APITestAutomation/TC2_post_request.robot">
+<test id="s1-t1" name="Post_user">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>${base_url}</arg>
+</arguments>
+<msg timestamp="20210104 12:11:56.385" level="INFO">Creating Session using : alias=mysess, url=https://jsonplaceholder.typicode.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210104 12:11:56.384" endtime="20210104 12:11:56.386"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>id=11</arg>
+<arg>username=Delphine</arg>
+</arguments>
+<assign>
+<var>${body}</var>
+</assign>
+<msg timestamp="20210104 12:11:56.386" level="INFO">${body} = {'id': '11', 'username': 'Delphine'}</msg>
+<status status="PASS" starttime="20210104 12:11:56.386" endtime="20210104 12:11:56.386"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type="application/json;charset=utf-8"</arg>
+</arguments>
+<assign>
+<var>${header}</var>
+</assign>
+<msg timestamp="20210104 12:11:56.387" level="INFO">${header} = {'Content-Type': '"application/json;charset=utf-8"'}</msg>
+<status status="PASS" starttime="20210104 12:11:56.386" endtime="20210104 12:11:56.387"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>/users</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20210104 12:11:56.757" level="INFO">POST Request : url=https://jsonplaceholder.typicode.com/users 
+ path_url=/users 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': '"application/json;charset=utf-8"', 'Content-Length': '36'} 
+ body={"id": "11", "username": "Delphine"} 
+ </msg>
+<msg timestamp="20210104 12:11:56.757" level="INFO">POST Response : url=https://jsonplaceholder.typicode.com/users 
+ status=201, reason=Created 
+ body={
+  "id": 11
+} 
+ </msg>
+<msg timestamp="20210104 12:11:56.757" level="INFO">/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'jsonplaceholder.typicode.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20210104 12:11:56.757" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20210104 12:11:56.387" endtime="20210104 12:11:56.757"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:56.757" endtime="20210104 12:11:56.758"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:56.758" endtime="20210104 12:11:56.758"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${status_code}</var>
+</assign>
+<msg timestamp="20210104 12:11:56.759" level="INFO">${status_code} = 201</msg>
+<status status="PASS" starttime="20210104 12:11:56.759" endtime="20210104 12:11:56.759"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${status_code}</arg>
+<arg>201</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:56.759" endtime="20210104 12:11:56.760"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${res_body}</var>
+</assign>
+<msg timestamp="20210104 12:11:56.761" level="INFO">${res_body} = {
+  "id": 11
+}</msg>
+<status status="PASS" starttime="20210104 12:11:56.760" endtime="20210104 12:11:56.761"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${res_body}</arg>
+<arg>Delphine</arg>
+</arguments>
+<msg timestamp="20210104 12:11:56.761" level="FAIL">'{
+  "id": 11
+}' does not contain 'Delphine'</msg>
+<status status="FAIL" starttime="20210104 12:11:56.761" endtime="20210104 12:11:56.761"></status>
+</kw>
+<status status="FAIL" starttime="20210104 12:11:56.384" endtime="20210104 12:11:56.762" critical="yes">'{
+  "id": 11
+}' does not contain 'Delphine'</status>
+</test>
+<test id="s1-t2" name="Get_Users">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>${base_url}</arg>
+</arguments>
+<msg timestamp="20210104 12:11:56.763" level="INFO">Creating Session using : alias=mysess, url=https://jsonplaceholder.typicode.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210104 12:11:56.762" endtime="20210104 12:11:56.763"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>/users/11</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20210104 12:11:56.860" level="INFO">GET Request : url=https://jsonplaceholder.typicode.com/users/11 
+ path_url=/users/11 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210104 12:11:56.860" level="INFO">GET Response : url=https://jsonplaceholder.typicode.com/users/11 
+ status=404, reason=Not Found 
+ body={} 
+ </msg>
+<msg timestamp="20210104 12:11:56.860" level="INFO">/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'jsonplaceholder.typicode.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20210104 12:11:56.860" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210104 12:11:56.763" endtime="20210104 12:11:56.860"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${status_code}</var>
+</assign>
+<msg timestamp="20210104 12:11:56.861" level="INFO">${status_code} = 404</msg>
+<status status="PASS" starttime="20210104 12:11:56.861" endtime="20210104 12:11:56.861"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20210104 12:11:56.862" level="FAIL">404 != 200</msg>
+<status status="FAIL" starttime="20210104 12:11:56.861" endtime="20210104 12:11:56.862"></status>
+</kw>
+<status status="FAIL" starttime="20210104 12:11:56.762" endtime="20210104 12:11:56.862" critical="yes">404 != 200</status>
+</test>
+<test id="s1-t3" name="Get_Posts">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>${base_url}</arg>
+</arguments>
+<msg timestamp="20210104 12:11:56.864" level="INFO">Creating Session using : alias=mysess, url=https://jsonplaceholder.typicode.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210104 12:11:56.863" endtime="20210104 12:11:56.864"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>/users/10/posts</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20210104 12:11:57.160" level="INFO">GET Request : url=https://jsonplaceholder.typicode.com/users/10/posts 
+ path_url=/users/10/posts 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210104 12:11:57.161" level="INFO">GET Response : url=https://jsonplaceholder.typicode.com/users/10/posts 
+ status=200, reason=OK 
+ body=[
+  {
+    "userId": 10,
+    "id": 91,
+    "title": "aut amet sed",
+    "body": "libero voluptate eveniet aperiam sed\nsunt placeat suscipit molestias\nsimilique fugit nam natus\nexpedita consequatur consequatur dolores quia eos et placeat"
+  },
+  {
+    "userId": 10,
+    "id": 92,
+    "title": "ratione ex tenetur perferendis",
+    "body": "aut et excepturi dicta laudantium sint rerum nihil\nlaudantium et at\na neque minima officia et similique libero et\ncommodi voluptate qui"
+  },
+  {
+    "userId": 10,
+    "id": 93,
+    "title": "beatae soluta recusandae",
+    "body": "dolorem quibusdam ducimus consequuntur dicta aut quo laboriosam\nvoluptatem quis enim recusandae ut sed sunt\nnostrum est odit totam\nsit error sed sunt eveniet provident qui nulla"
+  },
+  {
+    "userId": 10,
+    "id": 94,
+    "title": "qui qui voluptates illo iste minima",
+    "body": "aspernatur expedita soluta quo ab ut similique\nexpedita dolores amet\nsed temporibus distinctio magnam saepe deleniti\nomnis facilis nam ipsum natus sint similique omnis"
+  },
+  {
+    "userId": 10,
+    "id": 95,
+    "title": "id minus libero illum nam ad officiis",
+    "body": "earum voluptatem facere provident blanditiis velit laboriosam\npariatur accusamus odio saepe\ncumque dolor qui a dicta ab doloribus consequatur omnis\ncorporis cupiditate eaque assumenda ad nesciunt"
+  },
+  {
+    "userId": 10,
+    "id": 96,
+    "title": "quaerat velit veniam amet cupiditate aut numquam ut sequi",
+    "body": "in non odio excepturi sint eum\nlabore voluptates vitae quia qui et\ninventore itaque rerum\nveniam non exercitationem delectus aut"
+  },
+  {
+    "userId": 10,
+    "id": 97,
+    "title": "quas fugiat ut perspiciatis vero provident",
+    "body": "eum non blanditiis soluta porro quibusdam voluptas\nvel voluptatem qui placeat dolores qui velit aut\nvel inventore aut cumque culpa explicabo aliquid at\nperspiciatis est et voluptatem dignissimos dolor itaque sit nam"
+  },
+  {
+    "userId": 10,
+    "id": 98,
+    "title": "laboriosam dolor voluptates",
+    "body": "doloremque ex facilis sit sint culpa\nsoluta assumenda eligendi non ut eius\nsequi ducimus vel quasi\nveritatis est dolores"
+  },
+  {
+    "userId": 10,
+    "id": 99,
+    "title": "temporibus sit alias delectus eligendi possimus magni",
+    "body": "quo deleniti praesentium dicta non quod\naut est molestias\nmolestias et officia quis nihil\nitaque dolorem quia"
+  },
+  {
+    "userId": 10,
+    "id": 100,
+    "title": "at nam consequatur ea labore ea harum",
+    "body": "cupiditate quo est a modi nesciunt soluta\nipsa voluptas error itaque dicta in\nautem qui minus magnam et distinctio eum\naccusamus ratione error aut"
+  }
+] 
+ </msg>
+<msg timestamp="20210104 12:11:57.161" level="INFO">/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'jsonplaceholder.typicode.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20210104 12:11:57.161" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210104 12:11:56.864" endtime="20210104 12:11:57.161"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${status_code}</var>
+</assign>
+<msg timestamp="20210104 12:11:57.162" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20210104 12:11:57.161" endtime="20210104 12:11:57.162"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${status_code}</arg>
+<arg>200</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:57.162" endtime="20210104 12:11:57.162"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${body}</var>
+</assign>
+<msg timestamp="20210104 12:11:57.162" level="INFO">${body} = [
+  {
+    "userId": 10,
+    "id": 91,
+    "title": "aut amet sed",
+    "body": "libero voluptate eveniet aperiam sed\nsunt placeat suscipit molestias\nsimilique fugit nam natus\nexpedita consequatur c...</msg>
+<status status="PASS" starttime="20210104 12:11:57.162" endtime="20210104 12:11:57.162"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${body}</arg>
+<arg>libero</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:57.163" endtime="20210104 12:11:57.163"></status>
+</kw>
+<status status="PASS" starttime="20210104 12:11:56.863" endtime="20210104 12:11:57.163" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Get_comments">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>${base_url}</arg>
+</arguments>
+<msg timestamp="20210104 12:11:57.164" level="INFO">Creating Session using : alias=mysess, url=https://jsonplaceholder.typicode.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210104 12:11:57.164" endtime="20210104 12:11:57.164"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>mysess</arg>
+<arg>/posts/1/comments</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20210104 12:11:57.250" level="INFO">GET Request : url=https://jsonplaceholder.typicode.com/posts/1/comments 
+ path_url=/posts/1/comments 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210104 12:11:57.250" level="INFO">GET Response : url=https://jsonplaceholder.typicode.com/posts/1/comments 
+ status=200, reason=OK 
+ body=[
+  {
+    "postId": 1,
+    "id": 1,
+    "name": "id labore ex et quam laborum",
+    "email": "Eliseo@gardner.biz",
+    "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+  },
+  {
+    "postId": 1,
+    "id": 2,
+    "name": "quo vero reiciendis velit similique earum",
+    "email": "Jayne_Kuhic@sydney.com",
+    "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
+  },
+  {
+    "postId": 1,
+    "id": 3,
+    "name": "odio adipisci rerum aut animi",
+    "email": "Nikita@garfield.biz",
+    "body": "quia molestiae reprehenderit quasi aspernatur\naut expedita occaecati aliquam eveniet laudantium\nomnis quibusdam delectus saepe quia accusamus maiores nam est\ncum et ducimus et vero voluptates excepturi deleniti ratione"
+  },
+  {
+    "postId": 1,
+    "id": 4,
+    "name": "alias odio sit",
+    "email": "Lew@alysha.tv",
+    "body": "non et atque\noccaecati deserunt quas accusantium unde odit nobis qui voluptatem\nquia voluptas consequuntur itaque dolor\net qui rerum deleniti ut occaecati"
+  },
+  {
+    "postId": 1,
+    "id": 5,
+    "name": "vero eaque aliquid doloribus et culpa",
+    "email": "Hayden@althea.biz",
+    "body": "harum non quasi et ratione\ntempore iure ex voluptates in ratione\nharum architecto fugit inventore cupiditate\nvoluptates magni quo et"
+  }
+] 
+ </msg>
+<msg timestamp="20210104 12:11:57.250" level="INFO">/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/urllib3/connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'jsonplaceholder.typicode.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20210104 12:11:58.363" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210104 12:11:57.164" endtime="20210104 12:11:58.363"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:58.363" endtime="20210104 12:11:58.386"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${status_code}</var>
+</assign>
+<msg timestamp="20210104 12:11:58.387" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20210104 12:11:58.386" endtime="20210104 12:11:58.387"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${status_code}</arg>
+<arg>200</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:58.387" endtime="20210104 12:11:58.387"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${body}</var>
+</assign>
+<msg timestamp="20210104 12:11:58.388" level="INFO">${body} = [
+  {
+    "postId": 1,
+    "id": 1,
+    "name": "id labore ex et quam laborum",
+    "email": "Eliseo@gardner.biz",
+    "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo...</msg>
+<status status="PASS" starttime="20210104 12:11:58.387" endtime="20210104 12:11:58.388"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${body}</arg>
+<arg>.biz</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:58.388" endtime="20210104 12:11:58.389"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${body}</var>
+</assign>
+<msg timestamp="20210104 12:11:58.389" level="INFO">${body} = [
+  {
+    "postId": 1,
+    "id": 1,
+    "name": "id labore ex et quam laborum",
+    "email": "Eliseo@gardner.biz",
+    "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo...</msg>
+<status status="PASS" starttime="20210104 12:11:58.389" endtime="20210104 12:11:58.389"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${body}</arg>
+<arg>.com</arg>
+</arguments>
+<status status="PASS" starttime="20210104 12:11:58.390" endtime="20210104 12:11:58.390"></status>
+</kw>
+<status status="PASS" starttime="20210104 12:11:57.163" endtime="20210104 12:11:58.391" critical="yes"></status>
+</test>
+<status status="FAIL" starttime="20210104 12:11:56.043" endtime="20210104 12:11:58.392"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="2">Critical Tests</stat>
+<stat pass="2" fail="2">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="2" id="s1" name="TC2 post request">TC2 post request</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
