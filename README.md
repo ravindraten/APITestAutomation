@@ -6,4 +6,4 @@ Install All dependencies from requirements.txt
 ```robot TC2_post_request.robot```
 
 ## Reports are available 
-- report.hml
+```report.hml```
